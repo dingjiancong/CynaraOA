@@ -1,0 +1,28 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/script/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/script/kindeditor/plugins/code/prettify.css" />
+<script charset="utf-8" src="${pageContext.request.contextPath}/script/kindeditor/kindeditor.js"></script>
+<script charset="utf-8" src="${pageContext.request.contextPath}/script/kindeditor/lang/zh-CN.js"></script>
+<script charset="utf-8" src="${pageContext.request.contextPath}/script/kindeditor/plugins/code/prettify.js"></script>
+<script>
+	KindEditor.ready(function(K) {
+		var editor1 = K.create('textarea[name="content"]', {
+			cssPath : '${pageContext.request.contextPath}/script/kindeditor/plugins/code/prettify.css',
+			uploadJson : '${pageContext.request.contextPath}/script/kindeditor/upload_json.jsp',
+			fileManagerJson : '${pageContext.request.contextPath}/script/kindeditor/file_manager_json.jsp',
+			allowFileManager : true,
+			afterCreate : function() {
+				var self = this;
+				K.ctrl(document, 13, function() {
+					self.sync();
+					document.forms['example'].submit();
+				});
+				K.ctrl(self.edit.doc, 13, function() {
+					self.sync();
+					document.forms['example'].submit();
+				});
+			}
+		});
+		prettyPrint();
+	});
+	</script>

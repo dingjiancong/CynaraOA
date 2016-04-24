@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="cc.cynara.oa.domain">
+	<!-- 
+		用来描述一个持久化类
+		name 类名
+		table 可以不系  对用的表 不写就是类名
+		catalog 数据库名称
+	 -->
+	<class name="Reply" table="cynara_reply">
+		<!-- 标识属性  和数据库的主键对应 
+			name 属性名称 
+			column 对应的列名
+		-->
+		<id name="id" column="id" length="5" type="java.lang.Long">
+			<!-- 主键的产生器  告诉hibernate以什么样的方式产生主键-->
+			<generator class="native"></generator>
+		</id>
+		<property name="content" column="content" type="text" length="60000"></property>
+		<property name="postTime" column="postTime" type="timestamp"></property>
+		<property name="ipAddr" column="ipAddr"></property>
+		<!-- author  表示我与user直接多对一的关系  -->
+		<many-to-one name="author" class="User" column="authorId"></many-to-one>
+		<property name="deleted" column="deleted"></property>
+		<!-- topic 表示我与 Topic之间的多对一的关系 -->
+		<many-to-one name="topic" class="Topic" column="topicId"></many-to-one>
+	</class>
+</hibernate-mapping>

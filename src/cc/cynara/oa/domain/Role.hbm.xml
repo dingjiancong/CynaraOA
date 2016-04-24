@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="cc.cynara.oa.domain">
+	<!-- 
+		用来描述一个持久化类
+		name 类名
+		table 可以不系  对用的表 不写就是类名
+		catalog 数据库名称
+	 -->
+	<class name="Role" table="cynara_role">
+		<!-- 标识属性  和数据库的主键对应 
+			name 属性名称 
+			column 对应的列名
+		-->
+		<id name="id" column="id" length="5" type="java.lang.Long">
+			<!-- 主键的产生器  告诉hibernate以什么样的方式产生主键-->
+			<generator class="native"></generator>
+		</id>
+		<property name="name" column="name" ></property>
+		<property name="description" column="description"></property>
+		<!-- users属性 表达了岗位与用户的关系  多对多-->
+		<set name="users" table="cynara_user_role">
+			<key column="roleId"></key>
+			<many-to-many class="User" column="userId"></many-to-many>
+		</set>
+		<!-- privileges 表示我与权限多对多的关系 -->
+		<set name="privileges" table="cynara_privilege_role" lazy="false">
+			<key column="roleId"></key>
+			<many-to-many class="Privilege" column="privilegeId"></many-to-many>
+		</set>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="CynaraOA"
+  id="myeclipse.1460790338271"
+  context-root="/CynaraOA"
+  j2ee-spec="5.0"
+  archive="CynaraOA.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

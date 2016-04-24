@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="cc.cynara.oa.domain">
+	<!-- 
+		用来描述一个持久化类
+		name 类名
+		table 可以不系  对用的表 不写就是类名
+		catalog 数据库名称
+	 -->
+	<class name="User" table="cynara_user">
+		<!-- 标识属性  和数据库的主键对应 
+			name 属性名称 
+			column 对应的列名
+		-->
+		<id name="id" column="id" length="5" type="java.lang.Long">
+			<!-- 主键的产生器  告诉hibernate以什么样的方式产生主键-->
+			<generator class="native"></generator>
+		</id>
+		<property name="loginName" column="loginName"></property>
+		<property name="password" column="password"></property>
+		<property name="name" column="name"></property>
+		<property name="gender" column="gender"></property>
+		<property name="phone" column="phone"></property>
+		<property name="email" column="email"></property>
+		<property name="description" column="description"></property>
+		<!-- department  表示用户与department时多对一的关系 -->
+		<many-to-one name="department" class="Department" column="departmentId"></many-to-one>
+		
+		<!-- roles 表示用户与role 多对多关系 -->
+		<set name="roles" table="cynara_user_role" lazy="false">
+			<key column="userId"></key>
+			<many-to-many class="Role" column="roleId"></many-to-many>
+		</set>
+		
+	</class>
+</hibernate-mapping>

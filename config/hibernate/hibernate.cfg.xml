@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<!-- 
+			一个session-factory只能连接一个数据库
+		-->
+<session-factory>
+	<!--
+		数据库连接信息 <property name="connection.username">root</property>
+		<property name="connection.password">qinaide</property> <property
+		name="connection.url"> jdbc:mysql://localhost:3306/cynaraoa
+		</property> <property name="connection.driver_class">
+		com.mysql.jdbc.Driver </property>
+	-->
+	<!-- 方言 org.hibernate.dialect.MySQLInnoDBDialect-->
+	<property name="hibernate.dialect">
+		org.hibernate.dialect.MySQL5InnoDBDialect
+	</property>
+	<!-- 
+		告诉hibernate session是由线程产生
+	-->
+	<!--
+		加上这句话在spring 事物处理的时候会出现问题 <property
+		name="current_session_context_class">thread</property>
+	-->
+	<property name="hbm2ddl.auto">update</property>
+	<!-- 
+		显示hibernate内部生成的sql语句
+		
+		<property name="current_session_context_class">thread</property>
+	-->
+	<property name="show_sql">true</property>
+	<mapping resource="cc/cynara/oa/domain/User.hbm.xml" />
+	<mapping resource="cc/cynara/oa/domain/Role.hbm.xml" />
+	<mapping resource="cc/cynara/oa/domain/Department.hbm.xml" />
+	<mapping resource="cc/cynara/oa/domain/Privilege.hbm.xml" />
+	<mapping resource="cc/cynara/oa/domain/Forum.hbm.xml" />
+	<mapping resource="cc/cynara/oa/domain/Reply.hbm.xml" />
+	<mapping resource="cc/cynara/oa/domain/Topic.hbm.xml" />
+
+
+</session-factory>
+</hibernate-configuration>

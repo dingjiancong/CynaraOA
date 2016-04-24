@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"     
+    "http://struts.apache.org/dtds/struts-2.3.dtd"> 
+<struts>
+	<!-- 配置为开发模式 -->
+	<constant name="struts.devMode" value="true"></constant>
+	<!-- 配置action拓展名为.do -->
+	<constant name="struts.action.extension" value="do"></constant>
+	<!-- 主体该为simple -->
+	<constant name="struts.ui.theme" value="simple"></constant>
+	
+	<package name="default" namespace="/" extends="struts-default">
+	
+		<interceptors>
+			<!-- 声明拦截器 -->
+			<interceptor name="CheckPrivilegeInterceptor" class="cc.cynara.oa.utils.CheckPrivilegeInterceptor"></interceptor>
+			
+			<!--添加默认拦截器和自定义拦截器-->
+			<interceptor-stack name="myDefaultStack">
+				<interceptor-ref name="CheckPrivilegeInterceptor"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<!-- 配置默认拦截器栈-->
+		<default-interceptor-ref name="myDefaultStack"></default-interceptor-ref>
+		
+		<!-- 配置全局result -->
+		<global-results>
+			<result name="loginUI">/WEB-INF/jsp/loginoutAction/loginUI.jsp</result>
+			<result name="message">/message.jsp</result>
+		</global-results>
+	
+		<action name="test" class="testAction" method="test" >
+			<result name="success">/test.jsp</result>
+		</action>
+		
+		<!-- 配置岗位管理 -->
+		<action name="role_*" class="roleAction" method="{1}">
+			<result name="list">/WEB-INF/jsp/roleAction/list.jsp</result>
+			<result name="saveUI">/WEB-INF/jsp/roleAction/saveUI.jsp</result>
+			<result name="toList" type="redirectAction">role_list</result>
+			<result name="setPrivilegeUI">/WEB-INF/jsp/roleAction/setPrivilegeUI.jsp</result>
+		</action>
+		
+		<!-- 配置部门管理 -->
+		<action name="department_*" class="departmentAction" method="{1}">
+			<result name="list">/WEB-INF/jsp/departmentAction/list.jsp</result>
+			<result name="saveUI">/WEB-INF/jsp/departmentAction/saveUI.jsp</result>
+			<result name="toList" type="redirectAction">department_list?parentId=${parentId}</result>
+		</action>
+		
+		<!-- 用户管理 -->
+		<action name="user_*" class="userAction" method="{1}">
+			<result name="list">/WEB-INF/jsp/userAction/list.jsp</result>
+			<result name="saveUI">/WEB-INF/jsp/userAction/saveUI.jsp</result>
+			<result name="toList" type="redirectAction">user_list</result>
+		</action>
+		
+		<!-- 用户登录操作 -->
+		<action name="loginOut_*" class="loginOutAction" method="{1}">
+			<result name="logOut">/WEB-INF/jsp/loginoutAction/logOut.jsp</result>
+			<!--  <result name="loginUI">/WEB-INF/jsp/loginoutAction/loginUI.jsp</result>-->
+			<result name="toHome" type="">/WEB-INF/jsp/homeAction/index.jsp</result>
+		</action>
+		<!-- 配置home -->
+		<action name="home_*" class="homeAction" method="{1}">
+			<result name="{1}">/WEB-INF/jsp/homeAction/{1}.jsp</result>
+		</action>
+		
+		<!-- 配置板块管理 -->
+		<action name="forumManage_*" class="forumManageAction" method="{1}">
+			<result name="list">/WEB-INF/jsp/forumManageAction/list.jsp</result>
+			<result name="saveUI">/WEB-INF/jsp/forumManageAction/saveUI.jsp</result>
+			<result name="toList" type="redirectAction">forumManage_list</result>
+		</action>
+		<!-- 论坛：板块列表 -->
+		<action name="forum_*" class="forumAction" method="{1}">
+			<result name="list">/WEB-INF/jsp/forumAction/list.jsp</result>
+			<result name="show">/WEB-INF/jsp/forumAction/show.jsp</result>
+		</action>
+		<!-- 论坛：显示单个主题 -->
+		<action name="topic_*" class="topicAction" method="{1}">
+			<result name="show">/WEB-INF/jsp/topicAction/show.jsp</result>
+			<result name="addUI">/WEB-INF/jsp/topicAction/addUI.jsp</result>
+			<result name="toShow" type="redirectAction">topic_show?id=${#topicId}</result>
+		</action>
+		<!-- 发表回复 -->
+		<action name="reply_*" class="replyAction" method="{1}">
+			<result name="addUI">/WEB-INF/jsp/replyAction/addUI.jsp</result>
+			<result name="toShow" type="redirectAction">topic_show?id=${topicId}</result>
+		</action>
+	</package>
+	
+</struts>
